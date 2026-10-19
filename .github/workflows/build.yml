@@ -7,7 +7,16 @@ on:
 
 jobs:
   build:
-    name: Build Android Mod
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: Android 64-bit
+            target: android64
+          - name: Android 32-bit
+            target: android32
+
+    name: ${{ matrix.config.name }}
     runs-on: ubuntu-latest
 
     steps:
@@ -16,11 +25,10 @@ jobs:
       - name: Build Geode Mod
         uses: geode-sdk/build-geode-mod@main
         with:
-          combine: true
-          target: android
+          sdk: ${{ matrix.config.target }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ClickDelayBuffer-Android
+          name: ${{ matrix.config.target }}
           path: build/*.geode
