@@ -1,0 +1,11 @@
+{
+  "geode": "4.0.0",
+  "gd": {
+    "android": "2.2081"
+  },
+  "id": "yrrcsi.click_delay_buffer",
+  "name": "Click Delay Buffer",
+  "version": "v1.0.0",
+  "developer": "yrrcsi",
+  "description": "Delays mobile taps by a set number of frames to help buffer inputs and pass difficult timings."
+}
