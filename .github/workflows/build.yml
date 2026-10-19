@@ -24,14 +24,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Geode CLI
-        uses: geode-sdk/cli-setup-action@main
+      - name: Install Geode CLI
+        run: |
+          wget https://github.com/geode-sdk/cli/releases/latest/download/geode-cli-linux.zip
+          unzip geode-cli-linux.zip -d bin
+          echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
 
       - name: Install Loader Binaries
         run: geode sdk install-binaries -p ${{ matrix.config.platform }}
 
-      - name: Build Geode Mod
-        run: geode build -p ${{ matrix.config.platform }}
+      - name: Build Mod
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          target: ${{ matrix.config.target }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
