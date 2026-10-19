@@ -26,8 +26,14 @@ jobs:
 
       - name: Install Geode CLI
         run: |
-          wget https://github.com/geode-sdk/cli/releases/latest/download/geode-cli-linux.zip
-          unzip geode-cli-linux.zip -d bin
+          mkdir bin
+          curl -s https://api.github.com/repos/geode-sdk/cli/releases/latest \
+            | grep "browser_download_url.*linux.zip" \
+            | cut -d : -f 2,3 \
+            | tr -d \" \
+            | wget -qi - -O geode-cli.zip
+          unzip geode-cli.zip -d bin
+          chmod +x bin/geode
           echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
 
       - name: Install Loader Binaries
