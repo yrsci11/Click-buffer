@@ -12,9 +12,9 @@ jobs:
       matrix:
         config:
           - name: Android 64-bit
-            target: android64
+            target: Android64
           - name: Android 32-bit
-            target: android32
+            target: Android32
 
     name: ${{ matrix.config.name }}
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
       - name: Build Geode Mod
         uses: geode-sdk/build-geode-mod@main
         with:
-          sdk: ${{ matrix.config.target }}
+          target: ${{ matrix.config.target }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
