@@ -13,14 +13,22 @@ jobs:
         config:
           - name: Android 64-bit
             target: Android64
+            platform: android64
           - name: Android 32-bit
             target: Android32
+            platform: android32
 
     name: ${{ matrix.config.name }}
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Geode CLI
+        uses: geode-sdk/cli-setup-action@main
+
+      - name: Install Geode Binaries
+        run: geode sdk install-binaries -p ${{ matrix.config.platform }}
 
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
